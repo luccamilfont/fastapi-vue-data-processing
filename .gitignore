@@ -7,3 +7,4 @@ venv/
 
 *.pyc
 data-processing-scripts/csvs/
+data-processing-scripts/files/

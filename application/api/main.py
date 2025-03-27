@@ -29,7 +29,7 @@ models.Base.metadata.create_all(bind=engine)
 class AsnDadoBase(BaseModel):
     data: date
     reg_ans: int
-    cd_conta_contabil: str
+    cd_conta_contabil: int
     descricao: str
     vl_saldo_inicial: Decimal
     vl_saldo_final: Decimal
@@ -59,7 +59,7 @@ def create_asn_dado(asn_dado: AsnDadoBase, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(db_asn_dado) 
 
-        return {"message": "AsnDado created successfully", "id": db_asn_dado.asn_dado_id}
+        return {"message": "AsnDado created successfully", "id": db_asn_dado.id}
 
     except Exception as e:
         db.rollback()

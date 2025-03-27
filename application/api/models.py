@@ -26,10 +26,10 @@ import sqlalchemy as sa
 class AsnDado(Base):
     __tablename__ = 'ans_dado'
 
-    asn_dado_id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     data = Column(Date)
     reg_ans = Column(Integer)
-    cd_conta_contabil = Column(String(20))
+    cd_conta_contabil = Column(Integer)
     descricao = Column(String(255))
     vl_saldo_inicial = Column(Numeric(15, 2))
     vl_saldo_final = Column(Numeric(15, 2))

@@ -1,10 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
-  API_ENDPOINT: String,
-})
-
 const count = ref(0)
 </script>
 
@@ -22,7 +18,7 @@ const count = ref(0)
 </template>
 
 <script>
-const API_ENDPOINT = 'http://127.0.0.1:8000/operadora/all'
+const OPERADORA_ALL_ENDPOINT = 'http://127.0.0.1:8000/operadora/all'
 import axios from 'axios'
 
 export default {
@@ -55,10 +51,9 @@ export default {
     };
   },
   created(){
-    axios.get(API_ENDPOINT)
+    axios.get(OPERADORA_ALL_ENDPOINT)
     .then((response) => {
         this.rows = response.data;
-      console.log(response.data);
     })
     .catch((error) => {
       console.log(error);

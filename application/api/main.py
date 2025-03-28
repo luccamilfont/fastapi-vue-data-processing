@@ -9,12 +9,14 @@ from typing import List, Annotated
 from datetime import date
 from decimal import Decimal
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
+URL_FRONT = os.getenv("URL_FRONT")
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
-
+print(URL_FRONT)
 origins = [
-    "http://localhost:5173",
+    URL_FRONT
 ]
 
 app.add_middleware(

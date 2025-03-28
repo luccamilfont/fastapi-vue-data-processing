@@ -3,9 +3,10 @@ from fastapi import Depends, FastAPI, HTTPException, Depends, Query
 from pydantic import BaseModel
 import models
 from database import engine, SessionLocal
-from sqlalchemy.orm import Session
+from sqlalchemy import func
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.future import select
-from typing import List, Annotated
+from typing import Annotated
 from datetime import date
 from decimal import Decimal
 from fastapi.middleware.cors import CORSMiddleware
@@ -127,5 +128,17 @@ def create_transacao(transacao: TransacaoBase, db: db_dependency):
 async def read_all_operadora(db: db_dependency):
     result = db.query(models.Operadora).all()
     if not result:
-        raise HTTPException(status_code=404, detail='Question is not found')
+        raise HTTPException(status_code=404, detail="No 'Operadora' found")
+    return result
+
+@app.get("/operadora/relevant")
+async def read_relevant_operadora(db: db_dependency):
+    result = db.query(models.Operadora).join(
+        models.Transacao, models.Operadora.reg_ans == models.Transacao.reg_ans
+    ).filter(models.Transacao.vl_saldo_inicial < models.Transacao.vl_saldo_final
+    ).group_by(models.Operadora.id
+    ).limit(50).all()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No relevant 'Operadora' found")
     return result

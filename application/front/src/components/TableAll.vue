@@ -11,7 +11,7 @@ const count = ref(0)
       :rows="rows"
       :pagination-options="{
           enabled: true,
-          perPage: 5,
+          perPage: 3,
           mode: 'records'
       }"/>
   </div>

@@ -9,17 +9,15 @@ const count = ref(0)
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
+  <!-- <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
-  </div>
+  </div> -->
 
-  <p>
+  <!-- <p>
     Check out
     <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
       >create-vue</a
@@ -33,11 +31,11 @@ const count = ref(0)
       >Vue Docs Scaling up Guide</a
     >.
   </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p> -->
 </template>
 
 <style scoped>
-.read-the-docs {
+/* .read-the-docs {
   color: #888;
-}
+} */
 </style>

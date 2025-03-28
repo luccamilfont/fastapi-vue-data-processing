@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import VueGoodTablePlugin from 'vue-good-table-next';
+import 'vue-good-table-next/dist/vue-good-table-next.css'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(VueGoodTablePlugin)
+app.mount('#app')

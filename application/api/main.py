@@ -1,9 +1,10 @@
 from typing import Annotated
-from fastapi import Depends, FastAPI, HTTPException, Depends
+from fastapi import Depends, FastAPI, HTTPException, Depends, Query
 from pydantic import BaseModel
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from sqlalchemy.future import select
 from typing import List, Annotated
 from datetime import date
 from decimal import Decimal
@@ -51,7 +52,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @app.post("/operadora/")
-def create_operadora(operadora: OperadoraBase, db: Session = Depends(get_db)):
+def create_operadora(operadora: OperadoraBase, db: db_dependency):
     db_operadora = models.Operadora(
         reg_ans=operadora.reg_ans,
         cnpj=operadora.cnpj,
@@ -86,7 +87,7 @@ def create_operadora(operadora: OperadoraBase, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=f"Error creating 'Operadora': {e}")
     
 @app.post("/transacao/")
-def create_transacao(transacao: TransacaoBase, db: Session = Depends(get_db)):
+def create_transacao(transacao: TransacaoBase, db: db_dependency):
     db_transacao = models.Transacao(
         data=transacao.data,
         reg_ans=transacao.reg_ans,
@@ -106,3 +107,10 @@ def create_transacao(transacao: TransacaoBase, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=400, detail=f"Error creating 'Transação': {e}")
+
+@app.get("/operadora/all")
+async def read_all_operadora(db: db_dependency):
+    result = db.query(models.Operadora).all()
+    if not result:
+        raise HTTPException(status_code=404, detail='Question is not found')
+    return result

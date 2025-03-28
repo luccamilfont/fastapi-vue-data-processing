@@ -8,9 +8,22 @@ from sqlalchemy.future import select
 from typing import List, Annotated
 from datetime import date
 from decimal import Decimal
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TransacaoBase(BaseModel):
     data: date

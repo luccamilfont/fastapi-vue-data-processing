@@ -7,6 +7,22 @@
 </template>
 
 <script>
+const API_ENDPOINT = 'http://127.0.0.1:8000/operadora/all'
+import { reactive } from 'vue'; 
+import axios from 'axios'
+
+const data = reactive({ 
+  responses: "",
+  keyWord: "",
+});
+
+const getData = async () => {
+  let result = await axios.get(API_ENDPOINT, {params: {prompt: data.keyWord}}); 
+  data.responses = result.data;
+};
+
+getData()
+
 export default {
   name: 'my-component',
   data(){

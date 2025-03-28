@@ -1,10 +1,9 @@
 *.zip
+*.pyc
 
-# Virtual environment
 venv/
 *.env
 .env/
 
-*.pyc
 data-processing-scripts/csvs/
 data-processing-scripts/files/

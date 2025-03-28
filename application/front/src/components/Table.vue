@@ -1,69 +1,68 @@
+<script setup>
+import { ref } from 'vue'
+
+defineProps({
+  API_ENDPOINT: String,
+})
+
+const count = ref(0)
+</script>
+
 <template>
   <div>
     <vue-good-table
       :columns="columns"
-      :rows="rows"/>
+      :rows="rows"
+      :pagination-options="{
+          enabled: true,
+          perPage: 5,
+          mode: 'records'
+      }"/>
   </div>
 </template>
 
 <script>
 const API_ENDPOINT = 'http://127.0.0.1:8000/operadora/all'
-import { reactive } from 'vue'; 
 import axios from 'axios'
 
-const data = reactive({ 
-  responses: "",
-  keyWord: "",
-});
-
-const getData = async () => {
-  let result = await axios.get(API_ENDPOINT, {params: {prompt: data.keyWord}}); 
-  data.responses = result.data;
-};
-
-getData()
-
 export default {
-  name: 'my-component',
-  data(){
-    return {
+  data: function(){
+    return{
       columns: [
-        {
-          label: 'Data',
-          field: 'data',
-          dateInputFormat: 'yyyy-MM-dd',
-          dateOutputFormat: 'dd MMM yy'
-        },
-        {
-          label: 'Reg_Ans',
-          field: 'reg_ans',
-          type: 'number',
-        },
-        {
-          label: 'CD_CONTA_CONTABIL',
-          field: 'cd_conta_contabil',
-          type: 'number',
-        },
-        {
-          label: 'Descrição',
-          field: 'descricao',
-          type: 'string',
-        },
-        {
-          label: 'VL_SALDO_INICIAL',
-          field: 'vl_saldo_inicial',
-          type: 'decimal',
-        },
-        {
-          label: 'VL_SALDO_FINAL',
-          field: 'vl_saldo_final',
-          type: 'decimal',
-        },
+        { label: 'Logradouro', field: 'logradouro', type: 'string' },
+        { label: 'Telefone', field: 'telefone', type: 'string' },
+        { label: 'Número', field: 'numero', type: 'string' },
+        { label: 'Fax', field: 'fax', type: 'string' },
+        { label: 'Complemento', field: 'complemento', type: 'string' },
+        { label: 'Endereço Eletrônico', field: 'endereco_eletronico', type: 'string' },
+        { label: 'Reg ANS', field: 'reg_ans', type: 'number' },
+        { label: 'Bairro', field: 'bairro', type: 'string' },
+        { label: 'Representante', field: 'representante', type: 'string' },
+        { label: 'ID', field: 'id', type: 'number' },
+        { label: 'CNPJ', field: 'cnpj', type: 'string' },
+        { label: 'Cidade', field: 'cidade', type: 'string' },
+        { label: 'Cargo Representante', field: 'cargo_representante', type: 'string' },
+        { label: 'Razão Social', field: 'razao_social', type: 'string' },
+        { label: 'UF', field: 'uf', type: 'string' },
+        { label: 'Região de Comercialização', field: 'regiao_de_comercializacao', type: 'number' },
+        { label: 'Nome Fantasia', field: 'nome_fantasia', type: 'string' },
+        { label: 'CEP', field: 'cep', type: 'number' },
+        { label: 'Data Registro ANS', field: 'data_registro_ans', type: 'string' },
+        { label: 'Modalidade', field: 'modalidade', type: 'string' },
+        { label: 'DDD', field: 'ddd', type: 'number' },
       ],
-      rows: [
-        { data: "2025-03-28",  reg_ans: 422941,  cd_conta_contabil: 461719011,  descricao: "Alimentação ao Trabalhador",  vl_saldo_inicial: 7272.27,  vl_saldo_final: 9882.25},
-      ],
+      rows: []
     };
+  },
+  created(){
+    axios.get(API_ENDPOINT)
+    .then((response) => {
+        this.rows = response.data;
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   },
 };
 </script>

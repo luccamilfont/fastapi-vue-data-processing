@@ -73,3 +73,6 @@ npm run dev
 
 ### analysis2.sql
 - Query created to get "operadora"s with highest deb in the last year in the same category as the previous file
+
+##
+Tools used: Vue 3 + Vite kit, FastApi, SQL, pandas, pathlib, zipfile
